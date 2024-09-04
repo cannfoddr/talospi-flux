@@ -16,7 +16,7 @@ data:
     imagePullSecrets: []
 
     nfs:
-      server: 192.168.1.196
+      server: 192.168.20.196
       path: /mnt/POOL1/kubernetes
       mountOptions:
       volumeName: nfs-subdir-external-provisioner-root
