@@ -17,7 +17,7 @@ data:
 
     nfs:
       server: 192.168.20.196
-      path: /mnt/POOL1/kubernetes
+      path: /mnt/POOL2/kubernetes
       mountOptions:
       volumeName: nfs-subdir-external-provisioner-root
       # Reclaim policy for the main nfs volume
