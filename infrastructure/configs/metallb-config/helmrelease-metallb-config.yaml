@@ -6,7 +6,7 @@ metadata:
 spec:
   chart:
     spec:
-      chart: metallb
+      chart: metallb-config
       version: 0.14.8
       sourceRef:
         kind: HelmRepository
@@ -15,3 +15,7 @@ spec:
   interval: 15m
   timeout: 5m
   releaseName: metallb
+  valuesFrom:
+  - kind: ConfigMap
+    name: metallb-config-helm-chart-value-overrides
+    valuesKey: values.yaml # This is the default, but best to be explicit for clarity
