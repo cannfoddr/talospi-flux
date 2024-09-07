@@ -34,7 +34,7 @@ data:
             port: 9999
     operator:
       metallb:
-        namespace: metallb
+        namespace: metallb-system
     portal:
       open:
         enabled: false
