@@ -7,7 +7,7 @@ spec:
   chart:
     spec:
       chart: metallb-config
-     sourceRef:
+      sourceRef:
         kind: HelmRepository
         name: truecharts
         namespace: flux-system
