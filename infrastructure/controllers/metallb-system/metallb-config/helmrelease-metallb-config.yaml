@@ -13,7 +13,7 @@ spec:
         namespace: flux-system
   interval: 15m
   timeout: 5m
-  releaseName: metallb
+  releaseName: metallb-config
   valuesFrom:
   - kind: ConfigMap
     name: metallb-config-helm-chart-value-overrides
