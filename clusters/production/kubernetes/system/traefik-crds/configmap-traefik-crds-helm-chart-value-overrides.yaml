@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: traefik-crds-helm-chart-value-overrides
-  namespace: metallb-system
+  namespace: kube-system
 data:
   values.yaml: |-  
     image:
