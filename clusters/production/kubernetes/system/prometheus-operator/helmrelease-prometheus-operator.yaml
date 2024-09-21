@@ -19,8 +19,8 @@ spec:
     crds: CreateReplace
     remediation:
         retries: 3
-    upgrade:
-        crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
   valuesFrom:
   - kind: ConfigMap
     name: prometheus-operator-helm-chart-value-overrides
