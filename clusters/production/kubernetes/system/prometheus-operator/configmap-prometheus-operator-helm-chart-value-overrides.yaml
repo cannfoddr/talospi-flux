@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: prometheus-operator-helm-chart-value-overrides
-  namespace: kube-system
+  namespace: prometheus-operator
 data:
   values.yaml: |-  
     image:
