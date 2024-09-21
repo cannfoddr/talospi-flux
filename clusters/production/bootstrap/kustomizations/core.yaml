@@ -1,14 +1,16 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: system
+  name: core
   namespace: flux-system
 spec:
   interval: 10m0s
+  dependsOn:
+    - name: system
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./kubernetes/system
+  path: ./kubernetes/core
   prune: true
   wait: true
   timeout: 5m0s

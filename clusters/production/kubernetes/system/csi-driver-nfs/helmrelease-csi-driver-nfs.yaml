@@ -14,6 +14,14 @@ spec:
   interval: 15m
   timeout: 5m
   releaseName: csi-driver-nfs
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
   valuesFrom:
   - kind: ConfigMap
     name: csi-driver-nfs-helm-chart-value-overrides

@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: metallb-config-helm-chart-value-overrides
-  namespace: metallb-system
+  namespace: metallb-config
 data:
   values.yaml: |-  
     image:
