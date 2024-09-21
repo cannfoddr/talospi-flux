@@ -4,3 +4,4 @@ resources:
 - .gitkeep
 - gotk-components.yaml
 - gotk-sync.yaml
+- ../../kustomizations
