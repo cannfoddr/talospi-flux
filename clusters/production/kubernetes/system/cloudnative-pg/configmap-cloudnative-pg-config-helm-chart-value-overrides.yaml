@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: metallb-config-helm-chart-value-overrides
-  namespace: metallb-system
+  name: cloudnative-pg-helm-chart-value-overrides
+  namespace: cloudnative-pg
 data:
   values.yaml: |-  
     image:
