@@ -27,5 +27,4 @@ spec:
   valuesFrom:
   - kind: ConfigMap
     name: traefik-crds-helm-chart-value-overrides
-    namespace: kube-system
     valuesKey: values.yaml # This is the default, but best to be explicit for clarity
