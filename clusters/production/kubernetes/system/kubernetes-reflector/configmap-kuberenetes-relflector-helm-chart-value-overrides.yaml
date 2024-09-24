@@ -5,73 +5,108 @@ metadata:
   namespace: kubernetes-reflector
 data:
   values.yaml: |-
+    # Default values for reflector.
+    # This is a YAML-formatted file.
+    # Declare variables to be passed into your templates.
+
+    replicaCount: 1
+
     image:
-      repository: docker.io/emberstack/kubernetes-reflector
+      repository: emberstack/kubernetes-reflector
       pullPolicy: IfNotPresent
-      tag: build-7.1.217@sha256:982b8fc714349abe480a6864f3c3fce8e8801fd5068fac6add5b22ed32efc033
-    operator:
-      register: true
-    portal:
-      open:
-        enabled: false
+      # Overrides the image tag whose default is the chart appVersion.
+      tag: ""
+
+    imagePullSecrets: []
+    nameOverride: ""
+    fullnameOverride: ""
+
+    cron:
+      enabled: false
+      schedule: "*/15 * * * *"
+      activeDeadlineSeconds: 600
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+
+    configuration:
+      logging:
+        minimumLevel: Information
+      watcher:
+        timeout: ""
+      kubernetes:
+        skipTlsVerify: false
+
     rbac:
-      main:
-        enabled: true
-        primary: true
-        clusterWide: true
-        rules:
-          - apiGroups:
-              - ""
-            resources:
-              - "configmaps"
-              - "secrets"
-            verbs:
-              - "get"
-              - "list"
-              - "watch"
-              - "create"
-              - "update"
-              - "patch"
-              - "delete"
-          - apiGroups:
-              - ""
-            resources:
-              - "namespaces"
-            verbs:
-              - "watch"
-              - "list"
+      enabled: true
+
     serviceAccount:
-      main:
-        enabled: true
-        primary: true
-    kubernetesReflector:
-      logLevel: Information
-    workload:
-      main:
-        podSpec:
-          automountServiceAccountToken: true
-          containers:
-            main:
-              securityContext:
-                readOnlyRootFilesystem: true
-                runAsNonRoot: true
-              env:
-                ES_Serilog__MinimumLevel__Default: "{{ .Values.kubernetesReflector.logLevel }}"
-                ES_Reflector__Watcher__Timeout: ""
-                ES_Reflector__Kubernetes__SkipTlsVerify: "false"
-              probes:
-                liveness:
-                  type: http
-                  path: /healthz
-                  port: 25080
-                readiness:
-                  type: http
-                  path: /healthz
-                  port: 25080
-                startup:
-                  type: http
-                  path: /healthz
-                  port: 25080
-    service:
-      main:
-        enabled: false
+      # Specifies whether a service account should be created
+      create: true
+      # Annotations to add to the service account
+      annotations: {}
+      # The name of the service account to use.
+      # If not set and create is true, a name is generated using the fullname template
+      name: ""
+
+    # additional annotations to set on the pod
+    podAnnotations: {}
+    # additional labels to set on the pod
+    podLabels: {}
+    # additional env vars to add to the pod
+    extraEnv: []
+
+    podSecurityContext:
+      fsGroup: 2000
+
+    securityContext:
+      capabilities:
+        drop:
+          - ALL
+      readOnlyRootFilesystem: false
+      runAsNonRoot: true
+      runAsUser: 1000
+
+    healthcheck:
+      httpGet:
+        path: /healthz
+        port: http
+
+    livenessProbe:
+      initialDelaySeconds: 5
+      periodSeconds: 10
+    readinessProbe:
+      initialDelaySeconds: 5
+      periodSeconds: 10
+    startupProbe:
+      # The application will have a maximum of 50s (10 * 5 = 50s) to finish its startup.
+      failureThreshold: 10
+      periodSeconds: 5
+
+    resources:
+      {}
+      # We usually recommend not to specify default resources and to leave this as a conscious
+      # choice for the user. This also increases chances charts run on environments with little
+      # resources, such as Minikube. If you do want to specify resources, uncomment the following
+      # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+
+    autoscaling:
+      enabled: false
+      minReplicas: 1
+      maxReplicas: 100
+      targetCPUUtilizationPercentage: 80
+      # targetMemoryUtilizationPercentage: 80
+
+    nodeSelector: {}
+
+    tolerations: []
+
+    affinity: {}
+
+    priorityClassName: ""
