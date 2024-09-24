@@ -11,10 +11,10 @@ spec:
         kind: HelmRepository
         name: truecharts
         namespace: flux-system
-  interval: 15m
+        interval: 15m
   timeout: 5m
+  maxHistory: 3
   releaseName: kubernetes-reflector
-  maxhistory: 3
   install:
         createNamespace: true
         remediation:
