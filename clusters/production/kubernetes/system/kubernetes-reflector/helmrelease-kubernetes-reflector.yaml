@@ -1,0 +1,31 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kubernetes-reflector
+  namespace: kubernetes-reflector
+spec:
+  chart:
+    spec:
+      chart: kubernetes-reflector
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  interval: 15m
+  timeout: 5m
+  releaseName: kubernetes-reflector
+  maxhistory: 3
+  install:
+        createNamespace: true
+        remediation:
+            retries: 3
+  upgrade:
+        cleanupOnFail: true
+        remediation:
+            retries: 3
+  uninstall:
+        keepHistory: false
+  valuesFrom:
+  - kind: ConfigMap
+    name: kubernetes-reflector-helm-chart-value-overrides
+    valuesKey: values.yaml # This is the default, but best to be explicit for clarity
